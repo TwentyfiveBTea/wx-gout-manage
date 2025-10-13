@@ -27,11 +27,6 @@ public class UserDO {
     private Integer id;
 
     /**
-     * 用户小程序唯一标识
-     */
-    private String openid;
-
-    /**
      * 用户名
      */
     private String username;
