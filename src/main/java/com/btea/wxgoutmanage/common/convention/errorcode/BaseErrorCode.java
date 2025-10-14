@@ -14,7 +14,10 @@ public enum BaseErrorCode implements IErrorCode {
     SUCCESS("0", "成功"),
 
     // 客户端错误码
-    SERVICE_ERROR("0000001", "服务端异常");
+    CLIENT_ERROR("0000100", "客户端异常"),
+
+    // 服务端错误码
+    SERVICE_ERROR("0000200", "服务端异常");
 
     // 用户注册登陆错误码
 
