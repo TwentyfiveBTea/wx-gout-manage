@@ -1,7 +1,6 @@
 package com.btea.wxgoutmanage.common.convention.exception;
 
 import com.btea.wxgoutmanage.common.convention.errorcode.BaseErrorCode;
-import com.btea.wxgoutmanage.common.convention.errorcode.IErrorCode;
 
 /**
  * @Author: TwentyFiveBTea
