@@ -5,11 +5,14 @@ import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.teaopenapi.models.Config;
 import com.btea.wxgoutmanage.common.config.AliyunConfig;
+import com.btea.wxgoutmanage.common.constant.RedisCacheConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: TwentyFiveBTea
@@ -22,6 +25,7 @@ import java.util.Random;
 public class SmsCodeUtil {
 
     private final AliyunConfig aliyunConfig;
+    private final StringRedisTemplate stringRedisTemplate;
 
     /**
      * 生成6位数字验证码
@@ -69,6 +73,9 @@ public class SmsCodeUtil {
                 throw new RuntimeException(sendSmsResponse.getBody().getMessage());
             }
             log.info("发送短信验证码成功，手机号: {}, 验证码: {}", phone, generateCode);
+            // 将验证码写入Redis缓存，限时两分钟
+            stringRedisTemplate.opsForValue().set(RedisCacheConstant.SMS_CODE_CACHE_KEY + phone, generateCode, 2, TimeUnit.MINUTES);
+            log.info("将验证码写入Redis缓存，手机号: {}, 验证码: {}", phone, generateCode);
         } catch (Exception e) {
             log.error("发送短信验证码失败，手机号: {}, 验证码: {}, 错误信息: {}", phone, generateCode, e.getMessage());
             throw new RuntimeException(e);
