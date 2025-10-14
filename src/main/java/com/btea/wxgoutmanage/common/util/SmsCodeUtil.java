@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -55,10 +56,20 @@ public class SmsCodeUtil {
 
     /**
      * 发送短信验证码
-     * @param phone 手机号
+     *
+     * @param phone        手机号
      * @param generateCode 验证码
      */
     public void sendSmsCode(String phone, String generateCode) {
+        String lastSendTime = stringRedisTemplate.opsForValue().get(RedisCacheConstant.SMS_CODE_SEND_LIMIT_KEY + phone);
+        if (lastSendTime != null) {
+            long lastTime = Long.parseLong(lastSendTime);
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastTime < 60000) {
+                throw new RuntimeException("发送短信过于频繁,60秒内只能发送一条短信");
+            }
+        }
+
         SendSmsRequest request = new SendSmsRequest()
                 .setPhoneNumbers(phone)
                 .setSignName("验证码短信")
@@ -68,7 +79,7 @@ public class SmsCodeUtil {
             Client client = createClient();
             log.info("开始发送短信验证码，手机号: {}, 验证码: {}", phone, generateCode);
             SendSmsResponse sendSmsResponse = client.sendSms(request);
-            if(!"OK".equals(sendSmsResponse.getBody().getCode())){
+            if (!"OK".equals(sendSmsResponse.getBody().getCode())) {
                 log.error("发送短信验证码失败，手机号: {}, 验证码: {}, 错误信息: {}", phone, generateCode, sendSmsResponse.getBody().getMessage());
                 throw new RuntimeException(sendSmsResponse.getBody().getMessage());
             }
@@ -76,9 +87,21 @@ public class SmsCodeUtil {
             // 将验证码写入Redis缓存，限时一分钟
             stringRedisTemplate.opsForValue().set(RedisCacheConstant.SMS_CODE_CACHE_KEY + phone, generateCode, 1, TimeUnit.MINUTES);
             log.info("将验证码写入Redis缓存，手机号: {}, 验证码: {}", phone, generateCode);
+            stringRedisTemplate.opsForValue().set(RedisCacheConstant.SMS_CODE_SEND_LIMIT_KEY + phone, String.valueOf(System.currentTimeMillis()), 1, TimeUnit.MINUTES);
         } catch (Exception e) {
             log.error("发送短信验证码失败，手机号: {}, 验证码: {}, 错误信息: {}", phone, generateCode, e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 校验短信验证码
+     *
+     * @param phone 手机号
+     * @param code  验证码
+     * @return true: 验证码正确，false: 验证码错误
+     */
+    public boolean checkSmsCode(String phone, String code) {
+        return Objects.equals(code, stringRedisTemplate.opsForValue().get(RedisCacheConstant.SMS_CODE_CACHE_KEY + phone));
     }
 }
