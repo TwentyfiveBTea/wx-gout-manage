@@ -73,8 +73,8 @@ public class SmsCodeUtil {
                 throw new RuntimeException(sendSmsResponse.getBody().getMessage());
             }
             log.info("发送短信验证码成功，手机号: {}, 验证码: {}", phone, generateCode);
-            // 将验证码写入Redis缓存，限时两分钟
-            stringRedisTemplate.opsForValue().set(RedisCacheConstant.SMS_CODE_CACHE_KEY + phone, generateCode, 2, TimeUnit.MINUTES);
+            // 将验证码写入Redis缓存，限时一分钟
+            stringRedisTemplate.opsForValue().set(RedisCacheConstant.SMS_CODE_CACHE_KEY + phone, generateCode, 1, TimeUnit.MINUTES);
             log.info("将验证码写入Redis缓存，手机号: {}, 验证码: {}", phone, generateCode);
         } catch (Exception e) {
             log.error("发送短信验证码失败，手机号: {}, 验证码: {}, 错误信息: {}", phone, generateCode, e.getMessage());
