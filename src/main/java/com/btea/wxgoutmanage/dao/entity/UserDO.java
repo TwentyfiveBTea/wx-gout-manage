@@ -42,6 +42,11 @@ public class UserDO {
     private String phone;
 
     /**
+     * 头像 url
+     */
+    private String avatarUrl;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
