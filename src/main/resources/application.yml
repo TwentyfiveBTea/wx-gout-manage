@@ -9,11 +9,10 @@ spring:
     url: jdbc:mysql://120.24.88.212:3306/wx_gout_manager?useSSL=true&userUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
     password: Long050720
-  data:
-    redis:
-      host: 120.24.88.212
-      port: 6379
-      password: 123456
+  redis:
+    host: 120.24.88.212
+    port: 6379
+    password: 123456
 
 mybatis-plus:
   configuration:
@@ -22,7 +21,7 @@ mybatis-plus:
 
 aliyun:
   smsCode:
-    access-key-id: LTAl5t7Kk8CipDQdjZUHY2AB8
-    access-key-secret: IWMv72NfQ1nGSDFHu14uW51rwwysM
+    access-key-id: LTAI5t7K8CjpDQdjZUHY2AB8
+    access-key-secret: IIWMv72NfQ1nGSDFHu14uW51rwwysM
     region-id: cn-hangzhou
     template-code: SMS_296735552
