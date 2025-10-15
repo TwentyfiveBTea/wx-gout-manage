@@ -16,7 +16,8 @@ public class Results {
      */
     public static Result<Void> success() {
         return new Result<Void>()
-                .setCode(BaseErrorCode.SUCCESS.code());
+                .setCode(BaseErrorCode.SUCCESS.code())
+                .setMessage(BaseErrorCode.SUCCESS.message());
     }
 
     /**
@@ -25,6 +26,7 @@ public class Results {
     public static <T> Result<T> success(T data) {
         return new Result<T>()
                 .setCode(BaseErrorCode.SUCCESS.code())
+                .setMessage(BaseErrorCode.SUCCESS.message())
                 .setData(data);
     }
 
