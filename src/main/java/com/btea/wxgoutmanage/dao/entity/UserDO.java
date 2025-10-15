@@ -48,6 +48,16 @@ public class UserDO {
     private String avatarUrl;
 
     /**
+     * 安全问题
+     */
+    private String securityQuestion;
+
+    /**
+     * 安全问题答案
+     */
+    private String securityAnswer;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

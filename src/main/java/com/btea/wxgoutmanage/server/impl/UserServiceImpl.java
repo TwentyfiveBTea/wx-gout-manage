@@ -1,6 +1,7 @@
 package com.btea.wxgoutmanage.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.common.constant.RedisCacheConstant;
@@ -9,6 +10,7 @@ import com.btea.wxgoutmanage.common.convention.exception.ClientException;
 import com.btea.wxgoutmanage.dao.entity.UserDO;
 import com.btea.wxgoutmanage.dao.mapper.UserMapper;
 import com.btea.wxgoutmanage.dto.resp.LoginRespDTO;
+import com.btea.wxgoutmanage.dto.resp.SecurityQuestionRespDTO;
 import com.btea.wxgoutmanage.dto.resp.UserRegisterRespDTO;
 import com.btea.wxgoutmanage.server.UserService;
 import com.btea.wxgoutmanage.vo.req.UserLoginRespVO;
@@ -77,6 +79,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         UserContext.setUserId(userDO.getUserid());
         stringRedisTemplate.opsForValue().set(RedisCacheConstant.USER_LOGIN_CACHE_KEY + token, UserContext.getUserId(), 30, TimeUnit.DAYS);
         return new UserLoginRespVO(token);
+    }
+
+    /**
+     * 设置安全问题
+     *
+     * @param requestParam 安全问题实体类
+     */
+    @Override
+    public void setSecurityQuestion(SecurityQuestionRespDTO requestParam) {
+        String currentUserId = UserContext.getUserId();
+        LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
+                .set(UserDO::getSecurityQuestion, requestParam.getQuestion())
+                .set(UserDO::getSecurityAnswer, requestParam.getAnswer())
+                .eq(UserDO::getUserid, currentUserId);
+        int i = baseMapper.update(null, updateWrapper);
+        if (i != 1) {
+            throw new ClientException("设置安全问题失败");
+        }
+    }
+
+    /**
+     * 修改安全问题
+     *
+     * @param requestParam 安全问题实体类
+     */
+    @Override
+    public void updateSecurityQuestion(SecurityQuestionRespDTO requestParam) {
+        String currentUserId = UserContext.getUserId();
+        LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
+                .set(UserDO::getSecurityQuestion, requestParam.getQuestion())
+                .set(UserDO::getSecurityAnswer, requestParam.getAnswer())
+                .eq(UserDO::getUserid, currentUserId);
+        int i = baseMapper.update(null, updateWrapper);
+        if (i != 1) {
+            throw new ClientException("修改安全问题失败");
+        }
     }
 
 

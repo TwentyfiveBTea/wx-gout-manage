@@ -3,6 +3,7 @@ package com.btea.wxgoutmanage.controller;
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
 import com.btea.wxgoutmanage.dto.resp.LoginRespDTO;
+import com.btea.wxgoutmanage.dto.resp.SecurityQuestionRespDTO;
 import com.btea.wxgoutmanage.dto.resp.UserRegisterRespDTO;
 import com.btea.wxgoutmanage.server.UserService;
 import com.btea.wxgoutmanage.server.impl.UserServiceImpl;
@@ -35,5 +36,17 @@ public class UserController {
     @PostMapping("/user/login")
     public Result<UserLoginRespVO> login(@RequestBody @Valid LoginRespDTO requestParam) {
         return Results.success(userServiceImpl.login(requestParam));
+    }
+
+    @PostMapping("/user/set-security-question")
+    public Result<Void> setSecurityQuestion(@RequestBody SecurityQuestionRespDTO requestParam) {
+        userService.setSecurityQuestion(requestParam);
+        return Results.success();
+    }
+
+    @PostMapping("/user/update-security-question")
+    public Result<Void> updateSecurityQuestion(@RequestBody SecurityQuestionRespDTO requestParam) {
+        userService.updateSecurityQuestion(requestParam);
+        return Results.success();
     }
 }
