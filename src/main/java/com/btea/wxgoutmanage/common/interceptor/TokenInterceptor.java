@@ -47,6 +47,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
+        log.info("请求URI: {}", requestURI);
 
         // 检查是否在白名单中
         for (String pattern : whiteList) {
@@ -58,18 +59,23 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         try {
             // 从请求头中获取token
-            String token = request.getHeader("Authorization");
+            String token = request.getHeader("token");
+            log.info("从请求头中获取的token: {}", token);
             // 检查token是否存在
             if (!StringUtils.hasText(token)) {
+                log.warn("未提供认证令牌");
                 throw new ClientException("未提供认证令牌");
             }
             // 检查token是否有效（在Redis中是否存在）
             String userId = stringRedisTemplate.opsForValue().get(RedisCacheConstant.USER_LOGIN_CACHE_KEY + token);
+            log.info("从Redis中获取的用户ID: {}", userId);
             if (Objects.isNull(userId)) {
+                log.warn("认证令牌已过期或无效");
                 throw new ClientException("认证令牌已过期或无效");
             }
             // 设置用户上下文
             UserContext.setUserId(userId);
+            log.info("Token验证成功，用户ID: {}", userId);
             return true;
         } catch (Exception e) {
             log.error("Token验证失败", e);
