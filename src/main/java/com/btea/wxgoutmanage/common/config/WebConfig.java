@@ -19,16 +19,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注册Token拦截器，排除不需要认证的接口
+        // 注册Token拦截器
         registry.addInterceptor(tokenInterceptor)
                 // 拦截所有请求
-                .addPathPatterns("/**")
-                // 排除不需要认证的路径
-                .excludePathPatterns(
-                        "/user/register",
-                        "/user/send-generateCode",
-                        "/user/phone-login",
-                        "/user/password-login"
-                );
+                .addPathPatterns("/**");
+                // 注意：TokenInterceptor内部已经处理了白名单逻辑，不需要在这里排除
     }
 }

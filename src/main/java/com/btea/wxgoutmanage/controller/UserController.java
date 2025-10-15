@@ -2,10 +2,11 @@ package com.btea.wxgoutmanage.controller;
 
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
-import com.btea.wxgoutmanage.common.util.SmsCodeUtil;
-import com.btea.wxgoutmanage.dto.resp.SmsCodePhoneRespDTO;
+import com.btea.wxgoutmanage.dto.resp.LoginRespDTO;
 import com.btea.wxgoutmanage.dto.resp.UserRegisterRespDTO;
 import com.btea.wxgoutmanage.server.UserService;
+import com.btea.wxgoutmanage.server.impl.UserServiceImpl;
+import com.btea.wxgoutmanage.vo.req.UserLoginRespVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +24,16 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final SmsCodeUtil smsCodeUtil;
+    private final UserServiceImpl userServiceImpl;
 
-    @PostMapping("user/register")
+    @PostMapping("/user/register")
     public Result<Void> register(@RequestBody @Valid UserRegisterRespDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
     }
 
-    @PostMapping("user/send-generateCode")
-    public Result<Void> sendGenerateCode(@RequestBody @Valid SmsCodePhoneRespDTO requestParam) {
-        smsCodeUtil.sendSmsCode(requestParam.getPhone(), SmsCodeUtil.generateSixDigitCode());
-        return Results.success();
+    @PostMapping("/user/login")
+    public Result<UserLoginRespVO> login(@RequestBody @Valid LoginRespDTO requestParam) {
+        return Results.success(userServiceImpl.login(requestParam));
     }
 }

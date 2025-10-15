@@ -36,10 +36,4 @@ public class UserRegisterRespDTO {
     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式不正确")
     @JsonSerialize(using = PhoneDesensitizationSerializer.class)
     private String phone;
-
-    /**
-     * 验证码
-     */
-    private String code;
-
 }
