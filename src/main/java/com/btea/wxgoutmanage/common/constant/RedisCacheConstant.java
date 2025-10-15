@@ -8,13 +8,8 @@ package com.btea.wxgoutmanage.common.constant;
 public class RedisCacheConstant {
 
     /**
-     * 短信验证码缓存标识
+     * 用户登陆缓存标识
      */
-    public static final String SMS_CODE_CACHE_KEY = "sms_code:";
-
-    /**
-     * 短信验证码发送限制标识
-     */
-    public static final String SMS_CODE_SEND_LIMIT_KEY = "sms_code_send_limit:";
+    public static final String USER_LOGIN_CACHE_KEY = "user_login:";
 
 }
