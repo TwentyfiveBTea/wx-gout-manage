@@ -21,10 +21,11 @@ import java.util.Date;
 @Builder
 @TableName("t_user")
 public class UserDO {
+
     /**
      * 主键id
      */
-    private Integer id;
+    private String userid;
 
     /**
      * 用户名
