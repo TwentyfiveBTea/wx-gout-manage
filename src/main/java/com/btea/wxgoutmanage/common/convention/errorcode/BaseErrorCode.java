@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 public enum BaseErrorCode implements IErrorCode {
 
     // 成功状态响应码
-    SUCCESS("0", "成功"),
+    SUCCESS("0000000", "成功"),
 
     // 客户端错误码
     CLIENT_ERROR("0000100", "客户端异常"),
