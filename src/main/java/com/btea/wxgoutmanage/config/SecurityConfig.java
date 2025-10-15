@@ -13,9 +13,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/register",
-                        "/user/login")
-                .permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/**")
+                .permitAll();
+        // 移除了.anyRequest().authenticated();这行，这样所有请求都会被允许通过
     }
 }
