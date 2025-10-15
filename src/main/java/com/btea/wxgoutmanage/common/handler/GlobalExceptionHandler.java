@@ -6,7 +6,6 @@ import com.btea.wxgoutmanage.common.convention.errorcode.BaseErrorCode;
 import com.btea.wxgoutmanage.common.convention.exception.AbstractException;
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
