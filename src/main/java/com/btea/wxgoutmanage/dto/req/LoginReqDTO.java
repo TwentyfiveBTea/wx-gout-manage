@@ -1,4 +1,4 @@
-package com.btea.wxgoutmanage.dto.resp;
+package com.btea.wxgoutmanage.dto.req;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description: 账号密码登陆实体类
  */
 @Data
-public class LoginRespDTO {
+public class LoginReqDTO {
 
     /**
      * 用户名

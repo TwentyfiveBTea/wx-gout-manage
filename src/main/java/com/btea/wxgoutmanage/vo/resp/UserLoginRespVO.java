@@ -1,4 +1,4 @@
-package com.btea.wxgoutmanage.vo.req;
+package com.btea.wxgoutmanage.vo.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

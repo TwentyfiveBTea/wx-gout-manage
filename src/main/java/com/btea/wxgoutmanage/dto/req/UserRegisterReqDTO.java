@@ -1,4 +1,4 @@
-package com.btea.wxgoutmanage.dto.resp;
+package com.btea.wxgoutmanage.dto.req;
 
 import com.btea.wxgoutmanage.common.serialize.PhoneDesensitizationSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
  * @Description: 用户注册实体类
  */
 @Data
-public class UserRegisterRespDTO {
+public class UserRegisterReqDTO {
 
     /**
      * 用户名
