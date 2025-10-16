@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dao.mapper.MedicineMapper;
 import com.btea.wxgoutmanage.dto.req.QueryMedicineByCategoryReqDTO;
+import com.btea.wxgoutmanage.dto.req.QueryMedicineReqDTO;
 import com.btea.wxgoutmanage.server.MedicineService;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineByCategoryRespVO;
+import com.btea.wxgoutmanage.vo.resp.QueryMedicineRespVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,26 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
                 .collect(Collectors.toList());
         voPage.setRecords(voList);
         return voPage;
+    }
+
+    /**
+     * 模糊查询药品
+     *
+     * @param requestParam 模糊查询参数
+     * @return List<QueryMedicineRespVO> 返回查询结果
+     */
+    @Override
+    public List<QueryMedicineRespVO> fuzzyQueryMedicine(QueryMedicineReqDTO requestParam) {
+        LambdaQueryWrapper<MedicineDO> queryWrapper = Wrappers.lambdaQuery(MedicineDO.class)
+                .like(MedicineDO::getMedicineName, requestParam.getMedicineName());
+        List<MedicineDO> medicineDOList = baseMapper.selectList(queryWrapper);
+        return medicineDOList.stream()
+                .map(medicineDO -> QueryMedicineRespVO.builder()
+                        .medicineName(medicineDO.getMedicineName())
+                        .medicineCategory(medicineDO.getMedicineCategory())
+                        .description(medicineDO.getDescription())
+                        .descriptionImageUrl(medicineDO.getDescriptionImageUrl())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
