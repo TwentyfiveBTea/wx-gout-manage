@@ -8,7 +8,7 @@ import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dao.mapper.MedicineMapper;
 import com.btea.wxgoutmanage.dto.req.QueryMedicineByCategoryReqDTO;
 import com.btea.wxgoutmanage.server.MedicineService;
-import com.btea.wxgoutmanage.vo.resp.MedicineRespVO;
+import com.btea.wxgoutmanage.vo.resp.QueryMedicineByCategoryRespVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +33,15 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
      * @return Page<MedicineRespVO> 返回分页数据
      */
     @Override
-    public Page<MedicineRespVO> getMedicineByCategoryPage(QueryMedicineByCategoryReqDTO requestParam) {
+    public Page<QueryMedicineByCategoryRespVO> getMedicineByCategoryPage(QueryMedicineByCategoryReqDTO requestParam) {
         Page<MedicineDO> page = new Page<>(requestParam.getCurrent(), requestParam.getSize());
         LambdaQueryWrapper<MedicineDO> queryWrapper = Wrappers.lambdaQuery(MedicineDO.class)
                 .eq(MedicineDO::getMedicineCategory, requestParam.getMedicineCategory());
         Page<MedicineDO> queryPage = baseMapper.selectPage(page, queryWrapper);
-        Page<MedicineRespVO> voPage = new Page<>(queryPage.getCurrent(), queryPage.getSize(), queryPage.getTotal());
+        Page<QueryMedicineByCategoryRespVO> voPage = new Page<>(queryPage.getCurrent(), queryPage.getSize(), queryPage.getTotal());
         voPage.setPages(queryPage.getPages());
-        List<MedicineRespVO> voList = queryPage.getRecords().stream()
-                .map(medicineDO -> MedicineRespVO.builder()
+        List<QueryMedicineByCategoryRespVO> voList = queryPage.getRecords().stream()
+                .map(medicineDO -> QueryMedicineByCategoryRespVO.builder()
                         .medicineName(medicineDO.getMedicineName())
                         .description(medicineDO.getDescription())
                         .descriptionImageUrl(medicineDO.getDescriptionImageUrl())

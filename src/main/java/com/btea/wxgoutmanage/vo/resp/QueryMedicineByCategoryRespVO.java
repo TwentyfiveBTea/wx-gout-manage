@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 /**
  * @Author: TwentyFiveBTea
  * @Date: 2025/10/16 17:22
- * @Description: 药品返回实体类
+ * @Description: 查询药品类别返回实体类
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MedicineRespVO {
+public class QueryMedicineByCategoryRespVO {
 
     /**
      * 药品名字
