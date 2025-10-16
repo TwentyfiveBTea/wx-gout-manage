@@ -7,7 +7,7 @@ package com.btea.wxgoutmanage.common.context;
  */
 public class UserContext {
 
-    private static final ThreadLocal<String> USER_THREAD_LOCAL = new ThreadLocal<>();
+    private static final ThreadLocal<String> USER_ID_THREAD_LOCAL = new ThreadLocal<>();
 
     /**
      * 设置当前用户ID
@@ -15,7 +15,7 @@ public class UserContext {
      * @param userId 用户ID
      */
     public static void setUserId(String userId) {
-        USER_THREAD_LOCAL.set(userId);
+        USER_ID_THREAD_LOCAL.set(userId);
     }
 
     /**
@@ -24,13 +24,13 @@ public class UserContext {
      * @return 用户ID
      */
     public static String getUserId() {
-        return USER_THREAD_LOCAL.get();
+        return USER_ID_THREAD_LOCAL.get();
     }
 
     /**
      * 清除当前用户ID
      */
     public static void clear() {
-        USER_THREAD_LOCAL.remove();
+        USER_ID_THREAD_LOCAL.remove();
     }
 }
