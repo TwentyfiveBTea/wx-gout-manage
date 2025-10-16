@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/user/forget-password")
-    public Result<SercurityQuestionRespVO> forgetPassword(@RequestBody ForgotPasswordRepDTO requestParam) {
+    public Result<SercurityQuestionRespVO> forgetPassword(@RequestBody ForgotPasswordReqDTO requestParam) {
         return Results.success(userService.getSecurityQuestionByUsername(requestParam));
     }
 

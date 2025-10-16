@@ -61,7 +61,7 @@ public interface UserService extends IService<UserDO> {
      *
      * @return 安全问题实体类
      */
-    SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordRepDTO requestParam);
+    SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordReqDTO requestParam);
 
     /**
      * 重置密码

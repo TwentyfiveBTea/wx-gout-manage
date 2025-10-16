@@ -165,7 +165,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @param requestParam 安全问题实体类
      */
     @Override
-    public SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordRepDTO requestParam) {
+    public SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordReqDTO requestParam) {
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
                 .eq(UserDO::getUsername, requestParam.getUsername());
         UserDO userDO = baseMapper.selectOne(queryWrapper);

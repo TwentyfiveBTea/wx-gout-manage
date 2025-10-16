@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description: 重置密码实体类
  */
 @Data
-public class ForgotPasswordRepDTO {
+public class ForgotPasswordReqDTO {
 
     /**
      * 用户名
