@@ -89,14 +89,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @param requestParam 安全问题实体类
      */
     @Override
-    public void setSecurityQuestion(SecurityQuestionRespDTO requestParam) {
+    public void setSecurityQuestion(SecurityQuestionReqDTO requestParam) {
         String currentUserId = UserContext.getUserId();
+        UserDO userDO = new UserDO().builder()
+                .securityQuestion(requestParam.getQuestion())
+                .securityAnswer(requestParam.getAnswer())
+                .build();
         LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
-                .set(UserDO::getSecurityQuestion, requestParam.getQuestion())
-                .set(UserDO::getSecurityAnswer, requestParam.getAnswer())
                 .eq(UserDO::getUserid, currentUserId);
-        int i = baseMapper.update(null, updateWrapper);
-        if (i != 1) {
+        if (baseMapper.update(userDO, updateWrapper) != 1) {
             throw new ClientException("设置安全问题失败");
         }
     }
@@ -107,17 +108,99 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @param requestParam 安全问题实体类
      */
     @Override
-    public void updateSecurityQuestion(SecurityQuestionRespDTO requestParam) {
+    public void updateSecurityQuestion(SecurityQuestionReqDTO requestParam) {
         String currentUserId = UserContext.getUserId();
+        UserDO userDO = new UserDO().builder()
+                .securityQuestion(requestParam.getQuestion())
+                .securityAnswer(requestParam.getAnswer())
+                .build();
         LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
-                .set(UserDO::getSecurityQuestion, requestParam.getQuestion())
-                .set(UserDO::getSecurityAnswer, requestParam.getAnswer())
                 .eq(UserDO::getUserid, currentUserId);
-        int i = baseMapper.update(null, updateWrapper);
-        if (i != 1) {
+        if (baseMapper.update(userDO, updateWrapper) != 1) {
             throw new ClientException("修改安全问题失败");
         }
     }
 
+    /**
+     * 上传头像
+     *
+     * @param file 文件
+     */
+    @Override
+    public void uploadAvatar(MultipartFile file) {
+        String currentUserId = UserContext.getUserId();
+        String avatarUrl = aliyunOssUtil.uploadAvatar(file, currentUserId);
+        UserDO userDO = new UserDO().builder()
+                .avatarUrl(avatarUrl)
+                .build();
+        LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
+                .eq(UserDO::getUserid, currentUserId);
+        if (baseMapper.update(userDO, updateWrapper) != 1) {
+            throw new ClientException("上传头像失败");
+        }
+    }
 
+    /**
+     * 修改头像
+     *
+     * @param file 文件
+     */
+    @Override
+    public void updateAvatar(MultipartFile file) {
+        String currentUserId = UserContext.getUserId();
+        String avatarUrl = aliyunOssUtil.uploadAvatar(file, currentUserId);
+        UserDO userDO = new UserDO().builder()
+                .avatarUrl(avatarUrl)
+                .build();
+        LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
+                .eq(UserDO::getUserid, currentUserId);
+        if (baseMapper.update(userDO, updateWrapper) != 1) {
+            throw new ClientException("修改头像失败");
+        }
+    }
+
+    /**
+     * 根据用户名获取安全问题
+     *
+     * @param requestParam 安全问题实体类
+     */
+    @Override
+    public SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordRepDTO requestParam) {
+        LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
+                .eq(UserDO::getUsername, requestParam.getUsername());
+        UserDO userDO = baseMapper.selectOne(queryWrapper);
+        if (userDO == null) {
+            throw new ClientException("该账号不存在");
+        }
+        return new SercurityQuestionRespVO().builder()
+                .securityQuestion(userDO.getSecurityQuestion())
+                .userid(userDO.getUserid())
+                .build();
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param requestParam 重置密码实体类
+     */
+    @Override
+    public void resetPassword(ResetPasswordReqDTO requestParam) {
+        LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
+                .eq(UserDO::getUserid, requestParam.getUserid())
+                .eq(UserDO::getSecurityAnswer, requestParam.getSecurityAnswer());
+        if (baseMapper.selectOne(queryWrapper) == null) {
+            throw new ClientException("安全问题回答错误");
+        }
+        if (!Objects.equals(requestParam.getPassword1(), requestParam.getPassword2())) {
+            throw new ClientException("两次密码不一致");
+        }
+        UserDO userDO = new UserDO().builder()
+                .password(requestParam.getPassword1())
+                .build();
+        LambdaUpdateWrapper<UserDO> updateWrapper = Wrappers.lambdaUpdate(UserDO.class)
+                .eq(UserDO::getUserid, requestParam.getUserid());
+        if (baseMapper.update(userDO, updateWrapper) != 1) {
+            throw new ClientException("重置密码失败");
+        }
+    }
 }

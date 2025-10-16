@@ -40,6 +40,33 @@ public interface UserService extends IService<UserDO> {
      *
      * @param requestParam 安全问题实体类
      */
-    void updateSecurityQuestion(SecurityQuestionRespDTO requestParam);
+    void updateSecurityQuestion(SecurityQuestionReqDTO requestParam);
 
+    /**
+     * 上传用户头像
+     *
+     * @param file 头像文件
+     */
+    void uploadAvatar(MultipartFile file);
+
+    /**
+     * 修改用户头像
+     *
+     * @param file 头像文件
+     */
+    void updateAvatar(MultipartFile file);
+
+    /**
+     * 获取用户安全问题
+     *
+     * @return 安全问题实体类
+     */
+    SercurityQuestionRespVO getSecurityQuestionByUsername(ForgotPasswordRepDTO requestParam);
+
+    /**
+     * 重置密码
+     *
+     * @param requestParam 重置密码参数
+     */
+    void resetPassword(ResetPasswordReqDTO requestParam);
 }

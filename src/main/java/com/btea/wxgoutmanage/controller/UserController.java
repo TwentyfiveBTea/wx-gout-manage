@@ -49,4 +49,27 @@ public class UserController {
         userService.updateSecurityQuestion(requestParam);
         return Results.success();
     }
+
+    @PostMapping("/user/upload-avatar")
+    public Result<Void> uploadAvatar(@RequestParam("file") MultipartFile file) {
+        userService.uploadAvatar(file);
+        return Results.success();
+    }
+
+    @PostMapping("/user/update-avatar")
+    public Result<Void> updateAvatar(@RequestParam("file") MultipartFile file) {
+        userService.updateAvatar(file);
+        return Results.success();
+    }
+
+    @PostMapping("/user/forget-password")
+    public Result<SercurityQuestionRespVO> forgetPassword(@RequestBody ForgotPasswordRepDTO requestParam) {
+        return Results.success(userService.getSecurityQuestionByUsername(requestParam));
+    }
+
+    @PostMapping("/user/reset-password")
+    public Result<Void> resetPassword(@RequestBody ResetPasswordReqDTO requestParam) {
+        userService.resetPassword(requestParam);
+        return Results.success();
+    }
 }
