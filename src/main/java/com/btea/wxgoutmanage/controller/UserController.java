@@ -2,16 +2,16 @@ package com.btea.wxgoutmanage.controller;
 
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
-import com.btea.wxgoutmanage.dto.resp.LoginRespDTO;
-import com.btea.wxgoutmanage.dto.resp.SecurityQuestionRespDTO;
-import com.btea.wxgoutmanage.dto.resp.UserRegisterRespDTO;
+import com.btea.wxgoutmanage.dto.req.*;
 import com.btea.wxgoutmanage.server.UserService;
-import com.btea.wxgoutmanage.server.impl.UserServiceImpl;
-import com.btea.wxgoutmanage.vo.req.UserLoginRespVO;
+import com.btea.wxgoutmanage.vo.resp.SercurityQuestionRespVO;
+import com.btea.wxgoutmanage.vo.resp.UserLoginRespVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -25,7 +25,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final UserServiceImpl userServiceImpl;
 
     @PostMapping("/user/register")
     public Result<Void> register(@RequestBody @Valid UserRegisterReqDTO requestParam) {
