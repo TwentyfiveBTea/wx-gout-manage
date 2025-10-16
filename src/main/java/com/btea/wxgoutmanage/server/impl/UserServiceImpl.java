@@ -7,17 +7,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.common.constant.RedisCacheConstant;
 import com.btea.wxgoutmanage.common.context.UserContext;
 import com.btea.wxgoutmanage.common.convention.exception.ClientException;
+import com.btea.wxgoutmanage.common.util.AliyunOssUtil;
 import com.btea.wxgoutmanage.dao.entity.UserDO;
 import com.btea.wxgoutmanage.dao.mapper.UserMapper;
-import com.btea.wxgoutmanage.dto.resp.LoginRespDTO;
-import com.btea.wxgoutmanage.dto.resp.SecurityQuestionRespDTO;
-import com.btea.wxgoutmanage.dto.resp.UserRegisterRespDTO;
+import com.btea.wxgoutmanage.dto.req.*;
 import com.btea.wxgoutmanage.server.UserService;
-import com.btea.wxgoutmanage.vo.req.UserLoginRespVO;
+import com.btea.wxgoutmanage.vo.resp.SercurityQuestionRespVO;
+import com.btea.wxgoutmanage.vo.resp.UserLoginRespVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements UserService {
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final AliyunOssUtil aliyunOssUtil;
     private final UserMapper userMapper;
 
     /**
@@ -42,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @param requestParam 用户注册参数
      */
     @Override
-    public void register(UserRegisterRespDTO requestParam) {
+    public void register(UserRegisterReqDTO requestParam) {
         log.info("开始用户注册，用户名: {}, 密码1: {}, 密码2:{}, 手机号: {}", requestParam.getUsername(), requestParam.getPassword1(), requestParam.getPassword2(), requestParam.getPhone());
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
                 .eq(UserDO::getUsername, requestParam.getUsername());
@@ -67,13 +69,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
      * @param requestParam 账号密码登录参数
      */
     @Override
-    public UserLoginRespVO login(LoginRespDTO requestParam) {
+    public UserLoginRespVO login(LoginReqDTO requestParam) {
         LambdaQueryWrapper<UserDO> queryWrapper = Wrappers.lambdaQuery(UserDO.class)
                 .eq(UserDO::getUsername, requestParam.getUsername())
                 .eq(UserDO::getPassword, requestParam.getPassword());
         UserDO userDO = baseMapper.selectOne(queryWrapper);
         if (userDO == null) {
-            throw new ClientException("用户还未注册");
+            throw new ClientException("用户还未注册或密码错误");
         }
         String token = UUID.randomUUID().toString();
         UserContext.setUserId(userDO.getUserid());

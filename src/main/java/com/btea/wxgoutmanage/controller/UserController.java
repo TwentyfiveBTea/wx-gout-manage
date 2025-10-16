@@ -28,24 +28,24 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
 
     @PostMapping("/user/register")
-    public Result<Void> register(@RequestBody @Valid UserRegisterRespDTO requestParam) {
+    public Result<Void> register(@RequestBody @Valid UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
     }
 
     @PostMapping("/user/login")
-    public Result<UserLoginRespVO> login(@RequestBody @Valid LoginRespDTO requestParam) {
-        return Results.success(userServiceImpl.login(requestParam));
+    public Result<UserLoginRespVO> login(@RequestBody @Valid LoginReqDTO requestParam) {
+        return Results.success(userService.login(requestParam));
     }
 
     @PostMapping("/user/set-security-question")
-    public Result<Void> setSecurityQuestion(@RequestBody SecurityQuestionRespDTO requestParam) {
+    public Result<Void> setSecurityQuestion(@RequestBody SecurityQuestionReqDTO requestParam) {
         userService.setSecurityQuestion(requestParam);
         return Results.success();
     }
 
     @PostMapping("/user/update-security-question")
-    public Result<Void> updateSecurityQuestion(@RequestBody SecurityQuestionRespDTO requestParam) {
+    public Result<Void> updateSecurityQuestion(@RequestBody SecurityQuestionReqDTO requestParam) {
         userService.updateSecurityQuestion(requestParam);
         return Results.success();
     }
