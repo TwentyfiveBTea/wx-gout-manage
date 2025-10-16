@@ -29,10 +29,6 @@ public class AliyunOssUtil {
      * @return 阿里云客户端
      */
     public OSS createClient() {
-        log.info("创建OSS客户端");
-        log.info("Endpoint: {}", aliyunConfig.getEndpoint());
-        log.info("AccessKeyId: {}", aliyunConfig.getAccessKeyId());
-        // 注意：不要在生产环境中记录AccessKeySecret
         return new OSSClientBuilder().build(aliyunConfig.getEndpoint(), aliyunConfig.getAccessKeyId(), aliyunConfig.getAccessKeySecret());
     }
 
@@ -44,9 +40,8 @@ public class AliyunOssUtil {
      * @return 文件访问URL，如果上传失败则返回null
      */
     public String uploadFile(MultipartFile file, String filePath) {
-        OSS ossClient = null;
+        OSS ossClient = createClient();
         try {
-            ossClient = createClient();
             log.info("开始上传文件到OSS，Bucket: {}, 文件路径: {}", aliyunConfig.getBucketName(), filePath);
 
             // 获取文件输入流
@@ -72,12 +67,8 @@ public class AliyunOssUtil {
         } finally {
             // 关闭客户端
             if (ossClient != null) {
-                try {
-                    ossClient.shutdown();
-                    log.info("OSS客户端已关闭");
-                } catch (Exception e) {
-                    log.warn("关闭OSS客户端时发生异常", e);
-                }
+                ossClient.shutdown();
+                log.info("OSS客户端已关闭");
             }
         }
     }
