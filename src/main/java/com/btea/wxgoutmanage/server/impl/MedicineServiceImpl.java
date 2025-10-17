@@ -2,7 +2,6 @@ package com.btea.wxgoutmanage.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dao.mapper.MedicineMapper;
@@ -35,22 +34,16 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
      * @return Page<MedicineRespVO> 返回分页数据
      */
     @Override
-    public Page<QueryMedicineByCategoryRespVO> getMedicineByCategoryPage(QueryMedicineByCategoryReqDTO requestParam) {
-        Page<MedicineDO> page = new Page<>(requestParam.getCurrent(), requestParam.getSize());
+    public List<QueryMedicineByCategoryRespVO> getMedicineByCategory(QueryMedicineByCategoryReqDTO requestParam) {
         LambdaQueryWrapper<MedicineDO> queryWrapper = Wrappers.lambdaQuery(MedicineDO.class)
                 .eq(MedicineDO::getMedicineCategory, requestParam.getMedicineCategory());
-        Page<MedicineDO> queryPage = baseMapper.selectPage(page, queryWrapper);
-        Page<QueryMedicineByCategoryRespVO> voPage = new Page<>(queryPage.getCurrent(), queryPage.getSize(), queryPage.getTotal());
-        voPage.setPages(queryPage.getPages());
-        List<QueryMedicineByCategoryRespVO> voList = queryPage.getRecords().stream()
+        return baseMapper.selectList(queryWrapper).stream()
                 .map(medicineDO -> QueryMedicineByCategoryRespVO.builder()
                         .medicineName(medicineDO.getMedicineName())
                         .description(medicineDO.getDescription())
                         .medicineImageUrl(medicineDO.getMedicineImageUrl())
                         .build())
                 .collect(Collectors.toList());
-        voPage.setRecords(voList);
-        return voPage;
     }
 
     /**

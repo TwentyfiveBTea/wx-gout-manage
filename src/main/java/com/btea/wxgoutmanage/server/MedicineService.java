@@ -1,6 +1,5 @@
 package com.btea.wxgoutmanage.server;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dto.req.QueryMedicineByCategoryReqDTO;
@@ -23,7 +22,7 @@ public interface MedicineService extends IService<MedicineDO> {
      *
      * @return 所有药品
      */
-    Page<QueryMedicineByCategoryRespVO> getMedicineByCategoryPage(QueryMedicineByCategoryReqDTO requestParam);
+    List<QueryMedicineByCategoryRespVO> getMedicineByCategory(QueryMedicineByCategoryReqDTO requestParam);
 
     /**
      * 模糊查询药品

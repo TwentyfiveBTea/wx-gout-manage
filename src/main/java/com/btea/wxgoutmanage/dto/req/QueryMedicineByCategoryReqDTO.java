@@ -11,16 +11,6 @@ import lombok.Data;
 public class QueryMedicineByCategoryReqDTO {
 
     /**
-     * 当前页码
-     */
-    private Integer current;
-
-    /**
-     * 每页大小
-     */
-    private Integer size;
-
-    /**
      * 药品类别
      */
     private String medicineCategory;

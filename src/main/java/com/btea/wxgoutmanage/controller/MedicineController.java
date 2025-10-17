@@ -1,6 +1,5 @@
 package com.btea.wxgoutmanage.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
 import com.btea.wxgoutmanage.dto.req.QueryMedicineByCategoryReqDTO;
@@ -26,9 +25,9 @@ public class MedicineController {
 
     private final MedicineService medicineService;
 
-    @GetMapping("/medicine/page")
-    public Result<Page<QueryMedicineByCategoryRespVO>> getMedicineByCategoryPage(@RequestBody QueryMedicineByCategoryReqDTO requestParam) {
-        return Results.success(medicineService.getMedicineByCategoryPage(requestParam));
+    @GetMapping("/medicine/query")
+    public Result<List<QueryMedicineByCategoryRespVO>> getMedicineByCategory(@RequestBody QueryMedicineByCategoryReqDTO requestParam) {
+        return Results.success(medicineService.getMedicineByCategory(requestParam));
     }
 
     @GetMapping("/medicine/fuzzy-query")
