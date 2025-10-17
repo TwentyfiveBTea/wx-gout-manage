@@ -41,5 +41,5 @@ public class MedicineDO {
     /**
      * 药品图片链接
      */
-    private String descriptionImageUrl;
+    private String medicineImageUrl;
 }

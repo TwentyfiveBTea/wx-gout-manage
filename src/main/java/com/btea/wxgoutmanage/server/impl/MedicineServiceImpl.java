@@ -46,7 +46,7 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
                 .map(medicineDO -> QueryMedicineByCategoryRespVO.builder()
                         .medicineName(medicineDO.getMedicineName())
                         .description(medicineDO.getDescription())
-                        .descriptionImageUrl(medicineDO.getDescriptionImageUrl())
+                        .medicineImageUrl(medicineDO.getMedicineImageUrl())
                         .build())
                 .collect(Collectors.toList());
         voPage.setRecords(voList);
@@ -69,7 +69,7 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
                         .medicineName(medicineDO.getMedicineName())
                         .medicineCategory(medicineDO.getMedicineCategory())
                         .description(medicineDO.getDescription())
-                        .descriptionImageUrl(medicineDO.getDescriptionImageUrl())
+                        .medicineImageUrl(medicineDO.getMedicineImageUrl())
                         .build())
                 .collect(Collectors.toList());
     }

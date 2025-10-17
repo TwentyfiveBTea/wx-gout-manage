@@ -29,5 +29,5 @@ public class QueryMedicineByCategoryRespVO {
     /**
      * 药品图片链接
      */
-    private String descriptionImageUrl;
+    private String medicineImageUrl;
 }
