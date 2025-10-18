@@ -31,7 +31,7 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
      * 根据类别分页查询药品
      *
      * @param requestParam 请求参数
-     * @return Page<MedicineRespVO> 返回分页数据
+     * @return List<QueryMedicineByCategoryRespVO> 返回查询结果
      */
     @Override
     public List<QueryMedicineByCategoryRespVO> getMedicineByCategory(QueryMedicineByCategoryReqDTO requestParam) {
