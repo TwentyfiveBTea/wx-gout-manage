@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dao.mapper.MedicineMapper;
-import com.btea.wxgoutmanage.dto.req.QueryMedicineByCategoryReqDTO;
-import com.btea.wxgoutmanage.dto.req.QueryMedicineReqDTO;
 import com.btea.wxgoutmanage.server.MedicineService;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineRespVO;
@@ -30,13 +28,13 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
     /**
      * 根据类别分页查询药品
      *
-     * @param requestParam 请求参数
+     * @param medicineCategory 药品类别
      * @return List<QueryMedicineByCategoryRespVO> 返回查询结果
      */
     @Override
-    public List<QueryMedicineByCategoryRespVO> getMedicineByCategory(QueryMedicineByCategoryReqDTO requestParam) {
+    public List<QueryMedicineByCategoryRespVO> getMedicineByCategory(String medicineCategory) {
         LambdaQueryWrapper<MedicineDO> queryWrapper = Wrappers.lambdaQuery(MedicineDO.class)
-                .eq(MedicineDO::getMedicineCategory, requestParam.getMedicineCategory());
+                .eq(MedicineDO::getMedicineCategory, medicineCategory);
         return baseMapper.selectList(queryWrapper).stream()
                 .map(medicineDO -> QueryMedicineByCategoryRespVO.builder()
                         .medicineName(medicineDO.getMedicineName())
@@ -53,9 +51,9 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, MedicineDO>
      * @return List<QueryMedicineRespVO> 返回查询结果
      */
     @Override
-    public List<QueryMedicineRespVO> fuzzyQueryMedicine(QueryMedicineReqDTO requestParam) {
+    public List<QueryMedicineRespVO> fuzzyQueryMedicine(String medicineName) {
         LambdaQueryWrapper<MedicineDO> queryWrapper = Wrappers.lambdaQuery(MedicineDO.class)
-                .like(MedicineDO::getMedicineName, requestParam.getMedicineName());
+                .like(MedicineDO::getMedicineName, medicineName);
         List<MedicineDO> medicineDOList = baseMapper.selectList(queryWrapper);
         return medicineDOList.stream()
                 .map(medicineDO -> QueryMedicineRespVO.builder()

@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.FoodDO;
 import com.btea.wxgoutmanage.dao.mapper.FoodMapper;
-import com.btea.wxgoutmanage.dto.req.QueryFoodByCategoryReqDTO;
-import com.btea.wxgoutmanage.dto.req.QueryFoodReqDTO;
 import com.btea.wxgoutmanage.server.FoodService;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodRespVO;
@@ -26,13 +24,13 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, FoodDO> implements 
     /**
      * 根据类别查询食物
      *
-     * @param requestParam 查询参数
+     * @param edibleCategory 食物类别
      * @return List<QueryFoodByCategoryRespVO> 食物列表
      */
     @Override
-    public List<QueryFoodByCategoryRespVO> getFoodByCategory(QueryFoodByCategoryReqDTO requestParam) {
+    public List<QueryFoodByCategoryRespVO> getFoodByCategory(String edibleCategory) {
         LambdaQueryWrapper<FoodDO> queryWrapper = Wrappers.lambdaQuery(FoodDO.class)
-                .eq(FoodDO::getEdibleCategory, requestParam.getEdibleCategory());
+                .eq(FoodDO::getEdibleCategory, edibleCategory);
         return baseMapper.selectList(queryWrapper).stream()
                 .map(foodDO -> QueryFoodByCategoryRespVO.builder()
                         .foodName(foodDO.getFoodName())
@@ -45,13 +43,13 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, FoodDO> implements 
     /**
      * 模糊查询食物
      *
-     * @param requestParam 模糊查询参数
+     * @param foodName 食物名字
      * @return List<QueryFoodRespVO> 食物列表
      */
     @Override
-    public List<QueryFoodRespVO> fuzzyQueryFood(QueryFoodReqDTO requestParam) {
+    public List<QueryFoodRespVO> fuzzyQueryFood(String foodName) {
         LambdaQueryWrapper<FoodDO> queryWrapper = Wrappers.lambdaQuery(FoodDO.class)
-                .like(FoodDO::getFoodName, requestParam.getFoodName());
+                .like(FoodDO::getFoodName, foodName);
         return baseMapper.selectList(queryWrapper).stream()
                 .map(foodDO -> QueryFoodRespVO.builder()
                         .foodName(foodDO.getFoodName())

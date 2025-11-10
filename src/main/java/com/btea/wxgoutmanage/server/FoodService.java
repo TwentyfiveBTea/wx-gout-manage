@@ -2,8 +2,6 @@ package com.btea.wxgoutmanage.server;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.btea.wxgoutmanage.dao.entity.FoodDO;
-import com.btea.wxgoutmanage.dto.req.QueryFoodByCategoryReqDTO;
-import com.btea.wxgoutmanage.dto.req.QueryFoodReqDTO;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodRespVO;
 
@@ -19,17 +17,17 @@ public interface FoodService extends IService<FoodDO> {
     /**
      * 根据类别查询食物
      *
-     * @param requestParam 查询参数
+     * @param edibleCategory 食物类别
      * @return List<QueryFoodByCategoryRespVO> 返回查询结果
      */
-    List<QueryFoodByCategoryRespVO> getFoodByCategory(QueryFoodByCategoryReqDTO requestParam);
+    List<QueryFoodByCategoryRespVO> getFoodByCategory(String edibleCategory);
 
 
     /**
      * 模糊查询食物
      *
-     * @param requestParam 模糊查询参数
+     * @param foodName 食物名称
      * @return List<QueryFoodRespVO> 模糊查询结果
      */
-    List<QueryFoodRespVO> fuzzyQueryFood(QueryFoodReqDTO requestParam);
+    List<QueryFoodRespVO> fuzzyQueryFood(String foodName);
 }
