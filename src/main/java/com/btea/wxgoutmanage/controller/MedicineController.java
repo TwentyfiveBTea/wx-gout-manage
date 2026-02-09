@@ -2,7 +2,7 @@ package com.btea.wxgoutmanage.controller;
 
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
-import com.btea.wxgoutmanage.server.MedicineService;
+import com.btea.wxgoutmanage.service.MedicineService;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineRespVO;
 import lombok.RequiredArgsConstructor;

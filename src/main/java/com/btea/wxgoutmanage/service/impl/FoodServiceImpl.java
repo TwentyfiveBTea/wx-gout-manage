@@ -1,11 +1,11 @@
-package com.btea.wxgoutmanage.server.impl;
+package com.btea.wxgoutmanage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.FoodDO;
 import com.btea.wxgoutmanage.dao.mapper.FoodMapper;
-import com.btea.wxgoutmanage.server.FoodService;
+import com.btea.wxgoutmanage.service.FoodService;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodRespVO;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,11 @@
-package com.btea.wxgoutmanage.server.impl;
+package com.btea.wxgoutmanage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.btea.wxgoutmanage.dao.entity.MedicineDO;
 import com.btea.wxgoutmanage.dao.mapper.MedicineMapper;
-import com.btea.wxgoutmanage.server.MedicineService;
+import com.btea.wxgoutmanage.service.MedicineService;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryMedicineRespVO;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.btea.wxgoutmanage.server.impl;
+package com.btea.wxgoutmanage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -11,7 +11,7 @@ import com.btea.wxgoutmanage.common.util.AliyunOssUtil;
 import com.btea.wxgoutmanage.dao.entity.UserDO;
 import com.btea.wxgoutmanage.dao.mapper.UserMapper;
 import com.btea.wxgoutmanage.dto.req.*;
-import com.btea.wxgoutmanage.server.UserService;
+import com.btea.wxgoutmanage.service.UserService;
 import com.btea.wxgoutmanage.vo.resp.SercurityQuestionRespVO;
 import com.btea.wxgoutmanage.vo.resp.UserLoginRespVO;
 import lombok.RequiredArgsConstructor;

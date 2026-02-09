@@ -1,4 +1,4 @@
-package com.btea.wxgoutmanage.server;
+package com.btea.wxgoutmanage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.btea.wxgoutmanage.dao.entity.FoodDO;

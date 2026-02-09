@@ -2,7 +2,7 @@ package com.btea.wxgoutmanage.controller;
 
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
-import com.btea.wxgoutmanage.server.FoodService;
+import com.btea.wxgoutmanage.service.FoodService;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodByCategoryRespVO;
 import com.btea.wxgoutmanage.vo.resp.QueryFoodRespVO;
 import lombok.RequiredArgsConstructor;

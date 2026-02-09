@@ -3,7 +3,7 @@ package com.btea.wxgoutmanage.controller;
 import com.btea.wxgoutmanage.common.convention.result.Result;
 import com.btea.wxgoutmanage.common.convention.result.Results;
 import com.btea.wxgoutmanage.dto.req.*;
-import com.btea.wxgoutmanage.server.UserService;
+import com.btea.wxgoutmanage.service.UserService;
 import com.btea.wxgoutmanage.vo.resp.SercurityQuestionRespVO;
 import com.btea.wxgoutmanage.vo.resp.UserLoginRespVO;
 import lombok.RequiredArgsConstructor;
